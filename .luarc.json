@@ -1,0 +1,8 @@
+{
+    "diagnostics.disable": [
+        "duplicate-index"
+    ],
+    "diagnostics.globals": [
+        "vim"
+    ]
+}
