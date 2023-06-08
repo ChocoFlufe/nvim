@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
 
     local opts = { buffer = bufnr, noremap = false }
     wk.register({
-        ["<leader>k"] = { "<cmd>Lspsaga hover_doc<CR>", 'Hover', opts },
+        ['<leader>k'] = { '<cmd>Lspsaga hover_doc<CR>', 'Hover', opts },
         ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
         ['gD'] = { '<cmd>Lspsaga peek_declaration<cr>', 'Peek Declaration', opts },
         ['gr'] = { '<cmd>Lspsaga lsp_finder<CR>', 'References', opts },
@@ -292,3 +292,31 @@ require('fidget').setup({
     },
 })
 require('crates').setup()
+
+local rt = require('rust-tools')
+local mason_registry = require("mason-registry")
+local codelldb = mason_registry.get_package("codelldb")
+local extension_path = codelldb:get_install_path() .. "/extension/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+
+rt.setup({
+    dap = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+    },
+    capabilites = require('cmp_nvim_lsp').default_capabilities(),
+    server = {
+        on_attach = function(_, bufnr)
+            local opts = { buffer = bufnr, noremap = false }
+            wk.register({
+                ['<leader>k'] = { '<cmd>Lspsaga hover_doc<CR>', 'Hover', opts },
+                ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
+            })
+        end,
+    },
+    tools = {
+        hover_actions = {
+            auto_focus = true,
+        },
+    },
+})

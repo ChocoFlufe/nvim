@@ -78,6 +78,10 @@ local plugins = {
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         tag = 'nightly',
     },
+    'stevearc/oil.nvim',
+    -- Rust
+    'neovim/nvim-lspconfig',
+    'simrat39/rust-tools.nvim',
     -- Text
     'windwp/nvim-autopairs',
     'windwp/nvim-ts-autotag',
@@ -101,7 +105,9 @@ local plugins = {
     'ofirgall/open.nvim',
     -- Sessions
     'rmagatti/auto-session',
-
+    -- Debug
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
     -- Treesitter
     {
         'nvim-treesitter/nvim-treesitter',

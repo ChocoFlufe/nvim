@@ -16,7 +16,9 @@ wk.register({
 
     ['H'] = { '_', 'Start of Line', opts, mode = { 'n', 'v' } },
     ['L'] = { '$', 'End of Line', opts, mode = { 'n', 'v' } },
-    ['J'] = { 'mzJ`z', 'Move Line Below to Current Line', mode = 'n', opts },
+    ['J'] = { 'mzJ`z', 'Move Line Below to Current Line', opts, mode = 'n' },
+    ['<c-;>'] = { '<esc>$a;', 'Insert Semi-Colon At End Of Line', opts, mode = { 'n', 'i' } },
+    ['<c-,>'] = { '<esc>$a,', 'Insert Comma At End Of Line', opts, mode = { 'n', 'i' } },
 
     -- ['<c-a>'] = { 'gg<s-v>G', 'Select All', opts },
     ['<c-d>'] = { '<c-d>zz', 'Scroll Down Half A Page', opts },
@@ -36,7 +38,7 @@ wk.register({
     ['<c-k>'] = { '<cmd>cprev<cr>zz', 'Previous Quick Fix', opts },
     ['<leader>j'] = { '<cmd>lnext<cr>zz', 'Next Location', opts },
     ['<leader>s'] = { ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', 'Replace', opts },
-    ['<leader>x'] = { '<cmd>!chmod +x %<cr>', 'Mark File as Executable', opts },
+    ['<leader>xx'] = { '<cmd>!chmod +x %<cr>', 'Mark File as Executable', opts },
     ['<leader><leader>s'] = { '<cmd>so<cr>', 'Source', noremap = true },
     ['<leader><leader>e'] = { '<cmd>e ~/.config/nvim/lua/orca/plugins.lua<cr><cmd>cd ~/.config/nvim/<cr>',
         'Edit Config Files', opts },
@@ -49,7 +51,6 @@ wk.register({
 wk.register({
     ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
     ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Format', opts },
-
     ['<c-s-h>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
 
 })
@@ -81,8 +82,21 @@ wk.register({
     ['<leader>m'] = { '<cmd>Twilight<cr>', 'Enter Zen Mode', opts },
 })
 
+-- Buffers
 wk.register({
     ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', opts },
     ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', opts },
     ['<c-y>'] = { '<cmd>bd<cr>', 'Delete Buffer', opts },
+})
+
+-- Dap
+wk.register({
+    ['<leader>dt'] = { '<cmd>DapToggleBreakpoint<cr>', 'Toggle Breakpoint', opts },
+    ['<leader>dx'] = { '<cmd>DapTerminate<cr>', 'Terminate Debug', opts },
+    ['<leader>do'] = { '<cmd>DapStepOver<cr>', 'Step Debug', opts },
+})
+
+-- Oil
+wk.register({
+    ['-'] = { '<cmd>lua require("oil").open()<cr>', 'Open Oil File Explorer', opts },
 })

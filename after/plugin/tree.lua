@@ -49,3 +49,10 @@ require("nvim-tree").setup({
 })
 
 vim.keymap.set('n', '<c-e>', '<cmd>NvimTreeToggle<cr>')
+
+require('oil').setup({
+    default_file_explorer = false,
+    view_options = {
+        show_hidden = true,
+    },
+})

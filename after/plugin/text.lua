@@ -9,7 +9,10 @@ npairs.setup({
 
 local brackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } }
 npairs.add_rules {
-    Rule('<', '>'):with_move(function() return true end),
+    Rule('<', '>', 'html')
+        :with_move(function()
+            return true
+        end),
     Rule(' ', ' ')
         :with_pair(function(opts)
             local pair = opts.line:sub(opts.col - 1, opts.col)
@@ -34,6 +37,7 @@ end
 require('alternate-toggler').setup({
     alternates = {
         ['=='] = '!=',
+        ['yes'] = 'no',
     }
 })
 
