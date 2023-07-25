@@ -60,6 +60,22 @@ opt.timeoutlen = 300
 opt.autowrite = true
 opt.completeopt = { 'menuone', 'noselect' }
 opt.colorcolumn = '9999'
+-- vim.api.nvim_command('set autochdir')
+
+-- Set assembly syntax type
+autocmd('BufNew,BufRead', {
+    pattern = '*.asm',
+    callback = function()
+        vim.api.nvim_command('set ft=nasm')
+    end,
+})
+
+autocmd('BufNew,BufRead', {
+    pattern = '*.s',
+    callback = function()
+        vim.api.nvim_command('set ft=asm')
+    end,
+})
 
 -- Set line number for help files.
 autocmd('FileType', {

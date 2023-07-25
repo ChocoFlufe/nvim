@@ -1,7 +1,25 @@
 local actions = require("telescope.actions")
+local vimgrep_arguments = { unpack(require('telescope.config').values.vimgrep_arguments) }
+
+table.insert(vimgrep_arguments, "--hidden")
+table.insert(vimgrep_arguments, "--glob")
+
+table.insert(vimgrep_arguments, "!**/.git/*")
 
 require('telescope').setup {
     defaults = {
+        vimgrep_arguments = vimgrep_arguments,
+        file_ignore_patterns = {
+            '%.o',
+            '%.bin',
+            '%.cache',
+            '%.out',
+            '%.class',
+            '%.pdf',
+            '%.mkv',
+            '%.mp4',
+            '%.zip',
+        },
         -- layout_strategy = 'minimal',
         -- layout_config = {
         --     minimal = {
@@ -15,11 +33,16 @@ require('telescope').setup {
         path_display = { 'smart' },
         mappings = {
             i = {
-                ["<C-u>"] = actions.preview_scrolling_up,
-                ["<C-d>"] = actions.preview_scrolling_down,
-                ["<esc>"] = actions.close
+                ["<C-j>"] = actions.preview_scrolling_up,
+                ["<C-k>"] = actions.preview_scrolling_down,
+                ["<esc>"] = actions.close,
             }
         }
+    },
+    pickers = {
+        find_files = {
+            find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+        },
     },
     layout_config = {
         horizontal = {

@@ -51,10 +51,23 @@ wk.register({
 wk.register({
     ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
     ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Format', opts },
-    ['<c-s-h>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
+    ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
+    ['<leader>k'] = { '<cmd>Lspsaga hover_doc<cr>', 'Hover', opts },
+    ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
+    ['gD'] = { '<cmd>Lspsaga peek_declaration<cr>', 'Peek Declaration', opts },
+    ['gr'] = { '<cmd>Lspsaga lsp_finder<CR>', 'References', opts },
+    ['gi'] = { '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Peek Declaration', opts },
+    ['gs'] = { '<cmd>Navbuddy<cr>', 'Symbol List', opts },
+    ['[d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Next Diagnostic', opts },
+    [']d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic', opts },
+    ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
+    ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
+    ['<leader>rs'] = { '<cmd>lua vim.lsp.buf.document_symbol()<cr>', 'Document Symbols', opts },
+    ['<leader>t'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Floating Terminal', opts },
+
 
 })
-vim.keymap.set("n", "<leader>k", "<cmd>Lspsaga hover_doc<CR>")
+
 -- Telscope
 wk.register({
     ['<leader>f'] = { '<cmd>Telescope find_files<cr>', 'Find File', opts },
@@ -84,8 +97,10 @@ wk.register({
 
 -- Buffers
 wk.register({
-    ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', opts },
-    ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', opts },
+    ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', mode = { 'n', 'i', 'v' }, opts },
+    ['<c-s-h>'] = { '<cmd>BufferLineMoveNext<cr>', 'Move Buffer to RightNext Buffer', mode = { 'n', 'i', 'v' }, opts },
+    ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', mode = { 'n', 'i', 'v' }, opts },
+    ['<c-s-g>'] = { '<cmd>BufferLineMovePrev<cr>', 'Move Buffer to Left', mode = { 'n', 'i', 'v' }, opts },
     ['<c-y>'] = { '<cmd>bd<cr>', 'Delete Buffer', opts },
 })
 

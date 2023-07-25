@@ -43,6 +43,7 @@ local plugins = {
     },
     'onsails/lspkind.nvim',
     'jose-elias-alvarez/null-ls.nvim',
+    -- 'rhysd/vim-clang-format',
 
     -- Autocompletion
     'hrsh7th/nvim-cmp',

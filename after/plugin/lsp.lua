@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
 
     local opts = { buffer = bufnr, noremap = false }
     wk.register({
-        ['<leader>k'] = { '<cmd>Lspsaga hover_doc<CR>', 'Hover', opts },
+        ['<leader>k'] = { '<cmd>Lspsaga hover_doc<cr>', 'Hover', opts },
         ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
         ['gD'] = { '<cmd>Lspsaga peek_declaration<cr>', 'Peek Declaration', opts },
         ['gr'] = { '<cmd>Lspsaga lsp_finder<CR>', 'References', opts },
@@ -83,6 +83,7 @@ require('mason-lspconfig').setup_handlers({
     end,
     lspconfig.lemminx.setup({}),
 })
+
 
 vim.diagnostic.config({
     virtual_text = true
@@ -279,6 +280,12 @@ local null_ls = require('null-ls')
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.diagnostics.clang_check.with({
+            filetypes = { 'c', 'cpp', 'h', 'hpp' },
+        }),
+        null_ls.builtins.formatting.clang_format.with({
+            filetypes = { 'c', 'cpp', 'h', 'hpp' },
+        }),
     },
 })
 

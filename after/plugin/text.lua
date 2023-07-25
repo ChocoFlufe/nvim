@@ -45,4 +45,4 @@ require('todo-comments').setup()
 require('Comment').setup()
 require('template-string').setup()
 
-require('open').setup()
+-- require('open').setup()
