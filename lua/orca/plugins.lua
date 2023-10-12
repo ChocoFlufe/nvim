@@ -43,6 +43,7 @@ local plugins = {
     },
     'onsails/lspkind.nvim',
     'jose-elias-alvarez/null-ls.nvim',
+    'Hoffs/omnisharp-extended-lsp.nvim',
     -- 'rhysd/vim-clang-format',
 
     -- Autocompletion
@@ -105,7 +106,7 @@ local plugins = {
     -- Opener
     'ofirgall/open.nvim',
     -- Sessions
-    'rmagatti/auto-session',
+    -- 'rmagatti/auto-session',
     -- Debug
     'mfussenegger/nvim-dap',
     'rcarriga/nvim-dap-ui',

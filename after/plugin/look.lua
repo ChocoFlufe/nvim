@@ -13,12 +13,12 @@ require('indent_blankline').setup({
 })
 
 require('illuminate').configure()
-require('notify').setup()
+-- require('notify').setup()
 
-vim.notify = require('notify')
-require('notify').setup({
-    background_colour = '#000000',
-})
+-- vim.notify = require('notify')
+-- require('notify').setup({
+--     background_colour = '#000000',
+-- })
 
 require("barbecue").setup({
     create_autocmd = false,
@@ -94,11 +94,11 @@ require('lualine').setup {
     options = {
         theme = "catppuccin"
     },
-    sections = {
-        lualine_c = {
-            require('auto-session.lib').current_session_name,
-        },
-    },
+    -- sections = {
+    --     lualine_c = {
+    --         require('auto-session.lib').current_session_name,
+    --     },
+    -- },
 }
 
 require('headlines').setup()

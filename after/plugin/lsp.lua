@@ -8,6 +8,7 @@ require('mason-lspconfig').setup({
         'lua_ls',
         'rust_analyzer',
         'tsserver',
+        'omnisharp_mono',
     },
 })
 local capabilites = require('cmp_nvim_lsp').default_capabilities()
@@ -82,6 +83,14 @@ require('mason-lspconfig').setup_handlers({
         })
     end,
     lspconfig.lemminx.setup({}),
+    ['omnisharp'] = function()
+        lspconfig.omnisharp.setup(vim.tbl_extend('force', lsp_config, {
+            handlers = {
+                ["textDocument/definition"] = require('omnisharp_extended').handler,
+            },
+            cmd = { "omnisharp-mono", '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+        }))
+    end,
 })
 
 
