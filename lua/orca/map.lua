@@ -19,6 +19,7 @@ wk.register({
     ['J'] = { 'mzJ`z', 'Move Line Below to Current Line', opts, mode = 'n' },
     ['<c-;>'] = { '<esc>$a;', 'Insert Semi-Colon At End Of Line', opts, mode = { 'n', 'i' } },
     ['<c-,>'] = { '<esc>$a,', 'Insert Comma At End Of Line', opts, mode = { 'n', 'i' } },
+    ['<c-j>'] = { "<esc>j$a", 'Go To Next Line', mode = 'i', opts },
 
     -- ['<c-a>'] = { 'gg<s-v>G', 'Select All', opts },
     ['<c-d>'] = { '<c-d>zz', 'Scroll Down Half A Page', opts },
@@ -34,7 +35,7 @@ wk.register({
     ['n'] = { 'nzzzv', 'Next Search Term', opts },
     ['N'] = { 'Nzzzv', 'Previous Search Term', opts },
 
-    ['<c-j>'] = { '<cmd>cnext<cr>zz', 'Next Quick Fix', opts },
+    ['<c-j>'] = { '<cmd>cnext<cr>zz', 'Next Quick Fix', mode = 'n', opts },
     ['<c-k>'] = { '<cmd>cprev<cr>zz', 'Previous Quick Fix', opts },
     ['<leader>j'] = { '<cmd>lnext<cr>zz', 'Next Location', opts },
     ['<leader>s'] = { ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', 'Replace', opts },
@@ -45,27 +46,6 @@ wk.register({
 
     ['J'] = { ":m '>+1<cr>gv=gv", 'Move Selection Down', mode = 'v', opts },
     ['K'] = { ":m '<-2<cr>gv=gv", 'Move Selection Up', mode = 'v', opts },
-})
-
--- Lsp
-wk.register({
-    ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
-    ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Format', opts },
-    ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
-    ['<leader>k'] = { '<cmd>Lspsaga hover_doc<cr>', 'Hover', opts },
-    ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
-    ['gD'] = { '<cmd>Lspsaga peek_declaration<cr>', 'Peek Declaration', opts },
-    ['gr'] = { '<cmd>Lspsaga lsp_finder<CR>', 'References', opts },
-    ['gi'] = { '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Peek Declaration', opts },
-    ['gs'] = { '<cmd>Navbuddy<cr>', 'Symbol List', opts },
-    ['[d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Next Diagnostic', opts },
-    [']d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic', opts },
-    ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
-    ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
-    ['<leader>rs'] = { '<cmd>lua vim.lsp.buf.document_symbol()<cr>', 'Document Symbols', opts },
-    ['<leader>t'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Floating Terminal', opts },
-
-
 })
 
 -- Telscope

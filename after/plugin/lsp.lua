@@ -9,6 +9,7 @@ require('mason-lspconfig').setup({
         'rust_analyzer',
         'tsserver',
         'omnisharp_mono',
+        'clangd',
     },
 })
 local capabilites = require('cmp_nvim_lsp').default_capabilities()
@@ -19,15 +20,19 @@ local on_attach = function(client, bufnr)
     wk.register({
         ['<leader>k'] = { '<cmd>Lspsaga hover_doc<cr>', 'Hover', opts },
         ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
-        ['gD'] = { '<cmd>Lspsaga peek_declaration<cr>', 'Peek Declaration', opts },
-        ['gr'] = { '<cmd>Lspsaga lsp_finder<CR>', 'References', opts },
-        ['gi'] = { '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Peek Implementation', opts },
+        ['gD'] = { '<cmd>Lspsaga goto_definition<cr>', 'Go to Definition', opts },
+        ['gr'] = { '<cmd>Lspsaga finder ref<CR>', 'References', opts },
+        ['gi'] = { '<cmd>Lspsaga finder imp<CR>', 'Implementations', opts },
         ['gs'] = { '<cmd>Navbuddy<cr>', 'Symbol List', opts },
         ['[d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Next Diagnostic', opts },
         [']d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic', opts },
         ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
         ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
-        ['<leader>rs'] = { '<cmd>lua vim.lsp.buf.document_symbol()<cr>', 'Document Symbols', opts },
+        ['<leader>t'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Floating Terminal', opts },
+        ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
+        ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Toggle Trouble View', opts },
+        ['<leader>tt'] = { '<cmd>Lspsaga term_toggle', 'Toggle Terminal', opts },
+        ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
     })
 
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -89,6 +94,36 @@ require('mason-lspconfig').setup_handlers({
                 ["textDocument/definition"] = require('omnisharp_extended').handler,
             },
             cmd = { "omnisharp-mono", '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+        }))
+    end,
+    ['clangd'] = function()
+        lspconfig.clangd.setup(vim.tbl_extend('force', lsp_config, {
+            capabilities = {
+                offsetEncoding = 'utf-16',
+            },
+            on_attach = function(_, bufnr)
+                local opts = { buffer = bufnr, noremap = false }
+                wk.register({
+                    ['<leader>vh'] = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch source header file', opts },
+                    ['<leader>k'] = { '<cmd>Lspsaga hover_doc<cr>', 'Hover', opts },
+                    ['gd'] = { '<cmd>Lspsaga peek_definition<cr>', 'Peek Definition', opts },
+                    ['gD'] = { '<cmd>Lspsaga goto_definition<cr>', 'Go to Definition', opts },
+                    ['gr'] = { '<cmd>Lspsaga finder ref<CR>', 'References', opts },
+                    ['gi'] = { '<cmd>Lspsaga finder imp<CR>', 'Implementations', opts },
+                    ['gs'] = { '<cmd>Navbuddy<cr>', 'Symbol List', opts },
+                    ['[d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Next Diagnostic', opts },
+                    [']d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic', opts },
+                    ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
+                    ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
+                    ['<leader>t'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Floating Terminal', opts },
+                    ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
+                    ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Toggle Trouble View', opts },
+                    ['<leader>tt'] = { '<cmd>Lspsaga term_toggle', 'Toggle Terminal', opts },
+                    ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
+
+                })
+            end,
+            cmd = { 'clangd', '--enable-config', '--background-index' }
         }))
     end,
 })
@@ -186,14 +221,14 @@ cmp.setup({
     },
     formatting = {
         format = function(entry, vim_item)
-            if vim.tbl_contains({ 'path' }, entry.source.name) then
-                local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-                if icon then
-                    vim_item.kind = icon
-                    vim_item.kind_hl_group = hl_group
-                    return vim_item
-                end
-            end
+            -- if vim.tbl_contains({ 'path' }, entry.source.name) then
+            --     local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+            --     if icon then
+            --         vim_item.kind = icon
+            --         vim_item.kind_hl_group = hl_group
+            --         return vim_item
+            --     end
+            -- end
             return lspkind.cmp_format({ with_text = true })(entry, vim_item)
         end
     },
@@ -289,12 +324,12 @@ local null_ls = require('null-ls')
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.prettierd,
-        null_ls.builtins.diagnostics.clang_check.with({
-            filetypes = { 'c', 'cpp', 'h', 'hpp' },
-        }),
-        null_ls.builtins.formatting.clang_format.with({
-            filetypes = { 'c', 'cpp', 'h', 'hpp' },
-        }),
+        -- null_ls.builtins.diagnostics.clang_check.with({
+        --     filetypes = { 'c', 'cpp', 'h', 'hpp' },
+        -- }),
+        -- null_ls.builtins.formatting.clang_format.with({
+        --     filetypes = { 'c', 'cpp', 'h', 'hpp' },
+        -- }),
     },
 })
 
@@ -302,11 +337,11 @@ require('cmp-plugins').setup({
     files = { '~/.config/nvim/lua/orca/plugins.lua' }
 })
 
-require('fidget').setup({
-    window = {
-        blend = 0,
-    },
-})
+-- require('fidget').setup({
+--     window = {
+--         blend = 0,
+--     },
+-- })
 require('crates').setup()
 
 local rt = require('rust-tools')
@@ -321,15 +356,6 @@ rt.setup({
         adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
     },
     capabilites = require('cmp_nvim_lsp').default_capabilities(),
-    server = {
-        on_attach = function(_, bufnr)
-            local opts = { buffer = bufnr, noremap = false }
-            wk.register({
-                ['<leader>k'] = { '<cmd>Lspsaga hover_doc<CR>', 'Hover', opts },
-                ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
-            })
-        end,
-    },
     tools = {
         hover_actions = {
             auto_focus = true,

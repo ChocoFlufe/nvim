@@ -63,37 +63,43 @@ opt.colorcolumn = '9999'
 -- vim.api.nvim_command('set autochdir')
 
 -- Set assembly syntax type
-autocmd({'BufNew', 'BufRead'}, {
+autocmd({ 'BufNew', 'BufRead' }, {
     pattern = '*.asm',
     callback = function()
         vim.api.nvim_command('set ft=nasm')
     end,
 })
 
-vim.api.nvim_create_autocmd({'BufNew', 'BufRead'}, {
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufRead' }, {
     pattern = '*.s',
     callback = function()
-        vim.api.nvim_command('set ft=asm')
+        vim.api.nvim_command('set ft=nasm')
     end,
 })
 
-autocmd({'BufNew', 'BufRead'}, {
+autocmd({ 'BufNew', 'BufRead' }, {
     pattern = '*.vert',
     callback = function()
         vim.api.nvim_command('set ft=c')
     end,
 })
 
-autocmd({'BufNew', 'BufRead'}, {
+autocmd({ 'BufNew', 'BufRead' }, {
     pattern = '*.frag',
     callback = function()
         vim.api.nvim_command('set ft=c')
     end,
 })
-autocmd({'BufNew', 'BufRead'}, {
+autocmd({ 'BufNew', 'BufRead' }, {
     pattern = '*.glsl',
     callback = function()
         vim.api.nvim_command('set ft=c')
+    end,
+})
+autocmd({ 'BufNew', 'BufRead' }, {
+    pattern = '*.h',
+    callback = function()
+        vim.api.nvim_command('set ft=cpp')
     end,
 })
 

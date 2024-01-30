@@ -115,14 +115,17 @@ local plugins = {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
     },
-    'HiPhish/nvim-ts-rainbow2',
+    'HiPhish/rainbow-delimiters.nvim',
     -- 'josa42/nvim-telescope-minimal-layout',
     'nvim-telescope/telescope-ui-select.nvim',
     {
-        'SmiteshP/nvim-navbuddy',
+        "SmiteshP/nvim-navbuddy",
         dependencies = {
-            'MunifTanjim/nui.nvim',
-        }
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim"
+        },
+        opts = { lsp = { auto_attach = true } },
+        event = 'LspAttach',
     },
 
     -- Dashboard

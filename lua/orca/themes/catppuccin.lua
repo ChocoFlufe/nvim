@@ -48,7 +48,6 @@ require("catppuccin").setup({
         nvimtree = true,
         symbols_outline = true,
         treesitter = true,
-        ts_rainbow2 = true,
         which_key = true,
         navic = true,
         noice = true,
