@@ -95,3 +95,8 @@ wk.register({
 wk.register({
     ['-'] = { '<cmd>lua require("oil").open()<cr>', 'Open Oil File Explorer', opts },
 })
+
+-- Noice
+wk.register({
+    ['<leader>nd'] = { '<cmd>NoiceDimiss<cr>', 'Dismiss Noice Notification', opts }
+})

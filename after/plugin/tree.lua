@@ -55,4 +55,7 @@ require('oil').setup({
     view_options = {
         show_hidden = true,
     },
+    keymaps = {
+        ['<c-cr>'] = "actions.select",
+    }
 })
