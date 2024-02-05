@@ -1,6 +1,7 @@
 {
     "diagnostics.disable": [
-        "duplicate-index"
+        "duplicate-index",
+        "lowercase-global"
     ],
     "diagnostics.globals": [
         "vim"

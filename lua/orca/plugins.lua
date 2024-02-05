@@ -81,6 +81,14 @@ local plugins = {
         tag = 'nightly',
     },
     'stevearc/oil.nvim',
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require('harpoon').setup()
+        end,
+    },
     -- Rust
     'neovim/nvim-lspconfig',
     'simrat39/rust-tools.nvim',

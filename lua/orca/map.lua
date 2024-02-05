@@ -30,7 +30,7 @@ wk.register({
 
     ['<leader>sh'] = { '<cmd>vsplit<cr><c-w>w', 'Horizontal Split', opts },
     ['<leader>sv'] = { '<cmd>split<cr><c-w>w', 'Vertical Split', opts },
-    ['<leader>a'] = { '<c-w>w', 'Switch Split', opts },
+    ['<leader>r'] = { '<c-w>w', 'Switch Split', opts },
 
     ['n'] = { 'nzzzv', 'Next Search Term', opts },
     ['N'] = { 'Nzzzv', 'Previous Search Term', opts },
@@ -78,7 +78,7 @@ wk.register({
 -- Buffers
 wk.register({
     ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', mode = { 'n', 'i', 'v' }, opts },
-    ['<c-s-h>'] = { '<cmd>BufferLineMoveNext<cr>', 'Move Buffer to RightNext Buffer', mode = { 'n', 'i', 'v' }, opts },
+    ['<c-s-h>'] = { '<cmd>BufferLineMoveNext<cr>', 'Move Buffer to Right', mode = { 'n', 'i', 'v' }, opts },
     ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', mode = { 'n', 'i', 'v' }, opts },
     ['<c-s-g>'] = { '<cmd>BufferLineMovePrev<cr>', 'Move Buffer to Left', mode = { 'n', 'i', 'v' }, opts },
     ['<c-y>'] = { '<cmd>bd<cr>', 'Delete Buffer', opts },
@@ -99,4 +99,15 @@ wk.register({
 -- Noice
 wk.register({
     ['<leader>nd'] = { '<cmd>NoiceDimiss<cr>', 'Dismiss Noice Notification', opts }
+})
+
+-- Harpoon
+harpoon = require("harpoon")
+wk.register({
+    ['<leader>a'] = { function() harpoon:list():append() end, 'Append File to Harpoon', opts },
+    ['<leader>d'] = { function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, 'List Files in Harpoon', opts },
+    ['<leader>1'] = { function() harpoon:list():select(1) end, 'Switch to File 1 in Harpoon', opts },
+    ['<leader>2'] = { function() harpoon:list():select(2) end, 'Switch to File 2 in Harpoon', opts },
+    ['<leader>3'] = { function() harpoon:list():select(3) end, 'Switch to File 3 in Harpoon', opts },
+    ['<leader>4'] = { function() harpoon:list():select(4) end, 'Switch to File 4 in Harpoon', opts },
 })

@@ -28,7 +28,6 @@ local on_attach = function(client, bufnr)
         [']d'] = { '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic', opts },
         ['<leader>ra'] = { '<cmd>Lspsaga code_action<cr>', 'Code Action', opts },
         ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
-        ['<leader>t'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Floating Terminal', opts },
         ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
         ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Toggle Trouble View', opts },
         ['<leader>tt'] = { '<cmd>Lspsaga term_toggle', 'Toggle Terminal', opts },
