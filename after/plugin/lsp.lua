@@ -30,7 +30,6 @@ local on_attach = function(client, bufnr)
         ['<leader>rn'] = { '<cmd>Lspsaga rename<cr>', 'Rename', opts },
         ['<leader>b'] = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format', opts },
         ['<leader>xq'] = { '<cmd>TroubleToggle<cr>', 'Toggle Trouble View', opts },
-        ['<leader>tt'] = { '<cmd>Lspsaga term_toggle', 'Toggle Terminal', opts },
         ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
     })
 
@@ -120,6 +119,12 @@ require('mason-lspconfig').setup_handlers({
                     ['<leader>tt'] = { '<cmd>Lspsaga term_toggle', 'Toggle Terminal', opts },
                     ['<c-s-j>'] = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature', opts },
 
+                })
+                vim.api.nvim_create_autocmd('BufWritePre', {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format()
+                    end
                 })
             end,
             cmd = { 'clangd', '--enable-config', '--background-index' }
@@ -318,23 +323,145 @@ luasnip.add_snippets('typescriptreact', {
     }),
 })
 
-local null_ls = require('null-ls')
+luasnip.add_snippets('all', {
+    s('INCLUDE', {
+        d(1, function(args, snip)
+            -- Create a table of nodes that will go into the header choice_node
+            local headers_to_load_into_choice_node = {}
 
-null_ls.setup({
-    sources = {
-        -- null_ls.builtins.formatting.prettierd,
-        -- null_ls.builtins.diagnostics.clang_check.with({
-        --     filetypes = { 'c', 'cpp', 'h', 'hpp' },
-        -- }),
-        -- null_ls.builtins.formatting.clang_format.with({
-        --     filetypes = { 'c', 'cpp', 'h', 'hpp' },
-        -- }),
-    },
+            -- Step 1: get companion .h file if the current file is a .c or .cpp file excluding main.c
+            local extension = vim.fn.expand('%:e')
+            local is_main = vim.fn.expand('%'):match('main%.cp?p?') ~= nil
+            if (extension == 'c' or extension == 'cpp') and not is_main then
+                local matching_h_file = vim.fn.expand('%:t'):gsub('%.c', '.h')
+                local companion_header_file = string.format('#include "%s"', matching_h_file)
+                table.insert(headers_to_load_into_choice_node, t(companion_header_file))
+            end
+
+            -- Step 2: get all the local headers in current directory and below
+            local current_file_directory = vim.fn.expand('%:h')
+            local local_header_files = require('plenary.scandir').scan_dir(
+                current_file_directory,
+                { respect_gitignore = true, search_pattern = '.*%.h$' }
+            )
+
+            -- Clean up and insert the detected local header files
+            for _, local_header_name in ipairs(local_header_files) do
+                -- Trim down path to be a true relative path to the current file
+                local shortened_header_path = local_header_name:gsub(current_file_directory, '')
+                -- Replace '\' with '/'
+                shortened_header_path = shortened_header_path:gsub([[\+]], '/')
+                -- Remove leading forward slash
+                shortened_header_path = shortened_header_path:gsub('^/', '')
+                local new_header = t(string.format('#include "%s"', shortened_header_path))
+                table.insert(headers_to_load_into_choice_node, new_header)
+            end
+
+            -- Step 3: allow for custom insert_nodes for local and system headers
+            local custom_insert_nodes = {
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                         #include "{}"
+                         ]],
+                        {
+                            i(1, 'custom_insert.h'),
+                        }
+                    )
+                ),
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                         #include <{}>
+                         ]],
+                        {
+                            i(1, 'custom_system_insert.h'),
+                        }
+                    )
+                ),
+            }
+            -- Add the custom insert_nodes for adding custom local (wrapped in "") or system (wrapped in <>) headers
+            for _, custom_insert_node in ipairs(custom_insert_nodes) do
+                table.insert(headers_to_load_into_choice_node, custom_insert_node)
+            end
+
+            -- Step 4: finally last priority is the system headers
+            local system_headers = {
+                t('#include <assert.h>'),
+                t('#include <complex.h>'),
+                t('#include <ctype.h>'),
+                t('#include <errno.h>'),
+                t('#include <fenv.h>'),
+                t('#include <float.h>'),
+                t('#include <inttypes.h>'),
+                t('#include <iso646.h>'),
+                t('#include <limits.h>'),
+                t('#include <locale.h>'),
+                t('#include <math.h>'),
+                t('#include <setjmp.h>'),
+                t('#include <signal.h>'),
+                t('#include <stdalign.h>'),
+                t('#include <stdarg.h>'),
+                t('#include <stdatomic.h>'),
+                t('#include <stdbit.h>'),
+                t('#include <stdbool.h>'),
+                t('#include <stdckdint.h>'),
+                t('#include <stddef.h>'),
+                t('#include <stdint.h>'),
+                t('#include <stdio.h>'),
+                t('#include <stdlib.h>'),
+                t('#include <stdnoreturn.h>'),
+                t('#include <string.h>'),
+                t('#include <tgmath.h>'),
+                t('#include <threads.h>'),
+                t('#include <time.h>'),
+                t('#include <uchar.h>'),
+                t('#include <wchar.h>'),
+                t('#include <wctype.h>'),
+            }
+            for _, header_snippet in ipairs(system_headers) do
+                table.insert(headers_to_load_into_choice_node, header_snippet)
+            end
+
+            return sn(1, c(1, headers_to_load_into_choice_node))
+        end, {}),
+    }),
 })
 
-require('cmp-plugins').setup({
-    files = { '~/.config/nvim/lua/orca/plugins.lua' }
-})
+luasnip.filetype_extend("lua", { "c" })
+luasnip.filetype_set("cpp", { "c" })
+require("luasnip.loaders.from_lua").load({ include = { "c" } })
+require("luasnip.loaders.from_lua").lazy_load({ include = { "all", "cpp" } })
+
+-- local null_ls = require('null-ls')
+--
+-- null_ls.setup({
+--     sources = {
+-- null_ls.builtins.formatting.prettierd,
+-- null_ls.builtins.diagnostics.clang_check.with({
+--     filetypes = { 'c', 'cpp', 'h', 'hpp' },
+-- }),
+-- null_ls.builtins.formatting.clang_format.with({
+--     filetypes = { 'c', 'cpp', 'h', 'hpp' },
+-- }),
+--     },
+-- })
+
+
+-- local ft = require('guard.filetype')
+-- ft('c,cpp,h'):fmt('clang-format')
+--     :lint('clang-tidy')
+--
+-- require('guard').setup({
+--     fmt_on_save = true,
+--     lsp_as_default_formatter = false,
+-- })
+--
+-- require('cmp-plugins').setup({
+--     files = { '~/.config/nvim/lua/orca/plugins.lua' }
+-- })
 
 -- require('fidget').setup({
 --     window = {

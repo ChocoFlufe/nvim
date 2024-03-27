@@ -1,6 +1,12 @@
 local dap = require('dap')
 local dapui = require('dapui')
 
+dap.adapters.gdb = {
+    type = "executable",
+    command = "gdb",
+    args = { "-i", "dap" }
+}
+
 dapui.setup()
 
 dap.listeners.after.event_initialized["dapui_config"] = function()

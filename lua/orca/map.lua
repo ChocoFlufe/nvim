@@ -46,6 +46,7 @@ wk.register({
 
     ['J'] = { ":m '>+1<cr>gv=gv", 'Move Selection Down', mode = 'v', opts },
     ['K'] = { ":m '<-2<cr>gv=gv", 'Move Selection Up', mode = 'v', opts },
+    ['<leader>tt'] = { '<cmd>Lspsaga term_toggle<cr>', 'Toggle Terminal', opts },
 })
 
 -- Telscope
@@ -67,7 +68,7 @@ wk.register({
 
 -- Opener
 wk.register({
-    ['gx'] = { '<cmd>lua require("open").open_cword()<cr>', 'Format', opts },
+    ['gx'] = { '<cmd>lua require("open").open_cword()<cr>', 'Open', opts },
 })
 
 -- Zen
@@ -98,14 +99,14 @@ wk.register({
 
 -- Noice
 wk.register({
-    ['<leader>nd'] = { '<cmd>NoiceDimiss<cr>', 'Dismiss Noice Notification', opts }
+    ['<leader>nd'] = { '<cmd>NoiceDismiss<cr>', 'Dismiss Noice Notification', opts }
 })
 
 -- Harpoon
 harpoon = require("harpoon")
 wk.register({
     ['<leader>a'] = { function() harpoon:list():append() end, 'Append File to Harpoon', opts },
-    ['<leader>d'] = { function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, 'List Files in Harpoon', opts },
+    ['<leader>u'] = { function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, 'List Files in Harpoon', opts },
     ['<leader>1'] = { function() harpoon:list():select(1) end, 'Switch to File 1 in Harpoon', opts },
     ['<leader>2'] = { function() harpoon:list():select(2) end, 'Switch to File 2 in Harpoon', opts },
     ['<leader>3'] = { function() harpoon:list():select(3) end, 'Switch to File 3 in Harpoon', opts },

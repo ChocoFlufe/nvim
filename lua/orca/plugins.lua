@@ -42,7 +42,11 @@ local plugins = {
         },
     },
     'onsails/lspkind.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
+    -- 'jose-elias-alvarez/null-ls.nvim',
+    -- "nvimdev/guard.nvim",
+    -- dependencies = {
+    --     "nvimdev/guard-collection",
+    -- },
     'Hoffs/omnisharp-extended-lsp.nvim',
     -- 'rhysd/vim-clang-format',
 
@@ -63,12 +67,18 @@ local plugins = {
     'hrsh7th/cmp-nvim-lsp-document-symbol',
     'saecki/crates.nvim',
 
-    'L3MON4D3/LuaSnip',
+    {
+        "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
+    },
     'saadparwaiz1/cmp_luasnip',
     'rafamadriz/friendly-snippets',
     'jose-elias-alvarez/typescript.nvim',
     -- QuickFix
-    "folke/trouble.nvim",
+    {
+        "folke/trouble.nvim",
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+    },
     -- Telescope
     {
         'nvim-telescope/telescope.nvim',
@@ -99,9 +109,14 @@ local plugins = {
     'gcmt/wildfire.vim',
     'axelvc/template-string.nvim',
     'tpope/vim-surround',
+    {
+        'Julian/vim-textobj-variable-segment',
+        dependencies = { 'kana/vim-textobj-user' }
+    },
     -- Movement
     'abecodes/tabout.nvim',
     'phaazon/hop.nvim',
+    'tommcdo/vim-exchange',
     -- Comments
     'folke/todo-comments.nvim',
     'numToStr/Comment.nvim',
@@ -114,10 +129,15 @@ local plugins = {
     -- Opener
     'ofirgall/open.nvim',
     -- Sessions
-    -- 'rmagatti/auto-session',
+    'rmagatti/auto-session',
     -- Debug
     'mfussenegger/nvim-dap',
-    'rcarriga/nvim-dap-ui',
+    {
+        'rcarriga/nvim-dap-ui',
+        dependencies = {
+            "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio",
+        }
+    },
     -- Treesitter
     {
         'nvim-treesitter/nvim-treesitter',
@@ -168,8 +188,14 @@ local plugins = {
     'NvChad/nvim-colorizer.lua',
     -- Highlight
     'lukas-reineke/headlines.nvim',
+    'bfrg/vim-cpp-modern',
     -- Zen
     'folke/twilight.nvim',
+    -- Cpp Implementor
+    {
+        'eriks47/generate.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
 
     -- Utils
     'nvim-treesitter/playground',
