@@ -105,7 +105,7 @@ wk.register({
 -- Harpoon
 harpoon = require("harpoon")
 wk.register({
-    ['<leader>a'] = { function() harpoon:list():append() end, 'Append File to Harpoon', opts },
+    ['<leader>a'] = { function() harpoon:list():add() end, 'Append File to Harpoon', opts },
     ['<leader>u'] = { function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, 'List Files in Harpoon', opts },
     ['<leader>1'] = { function() harpoon:list():select(1) end, 'Switch to File 1 in Harpoon', opts },
     ['<leader>2'] = { function() harpoon:list():select(2) end, 'Switch to File 2 in Harpoon', opts },

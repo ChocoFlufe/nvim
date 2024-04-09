@@ -149,8 +149,6 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-require('luasnip.loaders.from_vscode').lazy_load()
-
 cmp.setup({
     sources = cmp.config.sources({
         {
@@ -432,8 +430,10 @@ luasnip.add_snippets('all', {
 
 luasnip.filetype_extend("lua", { "c" })
 luasnip.filetype_set("cpp", { "c" })
+luasnip.filetype_extend("cpp", { "cppdoc" })
 require("luasnip.loaders.from_lua").load({ include = { "c" } })
 require("luasnip.loaders.from_lua").lazy_load({ include = { "all", "cpp" } })
+require('luasnip.loaders.from_vscode').lazy_load()
 
 -- local null_ls = require('null-ls')
 --

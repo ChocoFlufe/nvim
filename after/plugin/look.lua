@@ -3,13 +3,10 @@ require('alpha').setup(require('alpha.themes.dashboard').config)
 vim.cmd('highlight IndentBlankLineIndent1 guifg=#494d64 gui=nocombine')
 vim.cmd('highlight IndentBlankLineContextChar guifg=#939ab7 gui=nocombine')
 
-require('indent_blankline').setup({
-    show_current_context = true,
-    show_current_context_start = true,
-    char_highlight_list = {
-        'IndentBlankLineIndent1',
-    },
-    colored_indent_levels = false,
+require('ibl').setup({
+    scope = {
+        enabled = false
+    }
 })
 
 require('illuminate').configure()

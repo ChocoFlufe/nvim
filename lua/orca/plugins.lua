@@ -163,7 +163,10 @@ local plugins = {
     -- Statusline
     'nvim-lualine/lualine.nvim',
     -- Indents
-    'lukas-reineke/indent-blankline.nvim',
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        main = "ibl",
+    },
     -- Lsp Progress
     'j-hui/fidget.nvim',
     -- Illuminate
