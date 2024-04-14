@@ -159,7 +159,14 @@ local plugins = {
     -- Dashboard
     'goolord/alpha-nvim',
     -- UI
-    'folke/noice.nvim',
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
+    },
     -- Statusline
     'nvim-lualine/lualine.nvim',
     -- Indents
@@ -186,7 +193,7 @@ local plugins = {
     -- Status Cloumn
     'luukvbaal/statuscol.nvim',
     -- Bufferline
-    { 'akinsho/bufferline.nvim', version = "*", },
+    -- { 'akinsho/bufferline.nvim', version = "*", },
     -- Colorizer
     'NvChad/nvim-colorizer.lua',
     -- Highlight

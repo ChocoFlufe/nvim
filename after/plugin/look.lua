@@ -10,12 +10,10 @@ require('ibl').setup({
 })
 
 require('illuminate').configure()
--- require('notify').setup()
 
--- vim.notify = require('notify')
--- require('notify').setup({
---     background_colour = '#000000',
--- })
+require('notify').setup({
+    background_colour = '#000000',
+})
 
 require("barbecue").setup({
     create_autocmd = false,
@@ -49,7 +47,7 @@ require("noice").setup({
         },
     },
     presets = {
-        bottom_search = true,
+        bottom_search = false,
         command_palette = true,
         long_message_to_split = true,
         inc_rename = false,
@@ -65,6 +63,14 @@ require("noice").setup({
                 width = 60,
                 height = "auto",
             },
+            -- border = {
+            --     style = "none",
+            --     padding = { 2, 3 },
+            -- },
+            -- filter_options = {},
+            -- win_options = {
+            --     winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+            -- },
         },
         popupmenu = {
             relative = "editor",
@@ -102,20 +108,20 @@ require('headlines').setup()
 require('statuscol').setup()
 require('twilight').setup()
 
-require('bufferline').setup({
-    options = {
-        style_preset = require('bufferline').style_preset.minimal,
-        separator_style = 'slope',
-        hover = {
-            enabled = true,
-            delay = 200,
-            reveal = { 'close' },
-        },
-        diagnostics_indicator = function(count, level, _, _)
-            local icon = level:match("error") and " " or " "
-            return " " .. icon .. count
-        end,
-        numbers = 'ordinal',
-        highlights = require("catppuccin.groups.integrations.bufferline").get(),
-    },
-})
+-- require('bufferline').setup({
+--     options = {
+--         style_preset = require('bufferline').style_preset.minimal,
+--         separator_style = 'slope',
+--         hover = {
+--             enabled = true,
+--             delay = 200,
+--             reveal = { 'close' },
+--         },
+--         diagnostics_indicator = function(count, level, _, _)
+--             local icon = level:match("error") and " " or " "
+--             return " " .. icon .. count
+--         end,
+--         numbers = 'ordinal',
+--         highlights = require("catppuccin.groups.integrations.bufferline").get(),
+--     },
+-- })

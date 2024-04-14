@@ -77,13 +77,13 @@ wk.register({
 })
 
 -- Buffers
-wk.register({
-    ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', mode = { 'n', 'i', 'v' }, opts },
-    ['<c-s-h>'] = { '<cmd>BufferLineMoveNext<cr>', 'Move Buffer to Right', mode = { 'n', 'i', 'v' }, opts },
-    ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', mode = { 'n', 'i', 'v' }, opts },
-    ['<c-s-g>'] = { '<cmd>BufferLineMovePrev<cr>', 'Move Buffer to Left', mode = { 'n', 'i', 'v' }, opts },
-    ['<c-y>'] = { '<cmd>bd<cr>', 'Delete Buffer', opts },
-})
+-- wk.register({
+--     ['<c-h>'] = { '<cmd>BufferLineCycleNext<cr>', 'Next Buffer', mode = { 'n', 'i', 'v' }, opts },
+--     ['<c-s-h>'] = { '<cmd>BufferLineMoveNext<cr>', 'Move Buffer to Right', mode = { 'n', 'i', 'v' }, opts },
+--     ['<c-g>'] = { '<cmd>BufferLineCyclePrev<cr>', 'Previous Buffer', mode = { 'n', 'i', 'v' }, opts },
+--     ['<c-s-g>'] = { '<cmd>BufferLineMovePrev<cr>', 'Move Buffer to Left', mode = { 'n', 'i', 'v' }, opts },
+--     ['<c-y>'] = { '<cmd>bd<cr>', 'Delete Buffer', opts },
+-- })
 
 -- Dap
 wk.register({
